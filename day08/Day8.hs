@@ -10,7 +10,7 @@ import           Text.Megaparsec.String
 type Registers = M.Map String Int
 
 data Insn = Insn { target    :: String
-                 , action    :: Int -> Int
+                 , delta     :: Int
                  , condition :: Registers -> Bool
                  }
 
@@ -18,23 +18,25 @@ main :: IO ()
 main = do
     insns <- map (unsafeParse insnP) . lines <$> readFile "input.txt"
 
-    print $ maximum (foldl step M.empty insns) -- part 1
-    print $ maximum (toList =<< scanl step M.empty insns) -- part 2
+    let results = scanl step M.empty insns
+
+    print $ maximum (last results)
+    print $ maximum (toList =<< results)
 
 step :: Registers -> Insn -> Registers
-step registers (Insn target action condition)
-  | condition registers = M.insertWith (+) target (action 0) registers
+step registers (Insn target delta condition)
+  | condition registers = M.insertWith (+) target delta registers
   | otherwise           = registers
 
 
 ---- Parsing input
 
 insnP :: Parser Insn
-insnP = Insn <$> some letterChar <* spaceChar <*> actionP <* string " if " <*> conditionP
+insnP = Insn <$> some letterChar <* spaceChar <*> deltaP <* string " if " <*> conditionP
 
-actionP :: Parser (Int -> Int)
-actionP = (+)      <$ string "inc " <*> intP
-      <|> subtract <$ string "dec " <*> intP
+deltaP :: Parser Int
+deltaP = string "inc " *> intP
+     <|> string "dec " *> (negate <$> intP)
 
 conditionP :: Parser (Registers -> Bool)
 conditionP = do
