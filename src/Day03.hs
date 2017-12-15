@@ -1,6 +1,8 @@
 #!/usr/bin/env stack
 -- stack runghc
 
+module Main (main) where
+
 import Data.Maybe
 import qualified Data.Map.Strict as M
 
@@ -9,15 +11,15 @@ input = 265149
 
 main :: IO ()
 main = do
-    print (part1 input)
-    print (part2 input)
+    print part1
+    print part2
 
 
-part1 :: Int -> Int
-part1 input = distances !! input
+part1 :: Int
+part1 = distances !! input
 
-part2 :: Int -> Int
-part2 input = head $ dropWhile (<= input) values
+part2 :: Int
+part2 = head $ dropWhile (<= input) values
 
 
 ---- Calculating distances from the center for part 1
@@ -43,11 +45,12 @@ values :: [Int]
 values = go (M.singleton (0,0) 1) coords
     where
     go :: Grid -> [(Int,Int)] -> [Int]
+    go _    []     = error "impossible"
     go grid (x:xs) = let value = sum (neighborValues grid x)
                       in value : go (M.insert x value grid) xs
 
     neighborValues :: Grid -> (Int,Int) -> [Int]
-    neighborValues grid coords = mapMaybe (`M.lookup` grid) (neighbors coords)
+    neighborValues grid point = mapMaybe (`M.lookup` grid) (neighbors point)
 
     neighbors :: (Int,Int) -> [(Int,Int)]
     neighbors (x,y) = [(x',y') | x' <- [x-1 .. x+1], y' <- [y-1 .. y+1]]

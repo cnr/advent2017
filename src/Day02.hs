@@ -1,12 +1,15 @@
 #!/usr/bin/env stack
 -- stack runghc
 
+module Main (main) where
+
+import Common
+
 main :: IO ()
 main = do
-    input <- map (map read . words) . lines <$> readFile "input.txt"
+    input <- map (map read . words) . lines <$> readInput 2
     print (checksum1 input)
     print (checksum2 input)
-    return ()
 
 checksum1 :: [[Int]] -> Int
 checksum1 = sum . map difference
@@ -14,8 +17,8 @@ checksum1 = sum . map difference
     difference xs = maximum xs - minimum xs
 
 -- point-free for fun
-checksum1' :: [[Int]] -> Int
-checksum1' = sum . map ((-) <$> maximum <*> minimum)
+-- checksum1' :: [[Int]] -> Int
+-- checksum1' = sum . map ((-) <$> maximum <*> minimum)
 
 checksum2 :: [[Int]] -> Int
 checksum2 = sum . map divisible

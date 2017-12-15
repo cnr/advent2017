@@ -1,11 +1,14 @@
 #!/usr/bin/env stack
 -- stack runghc
 
+module Main (main) where
+
+import Common
 import Data.Char (digitToInt, isDigit)
 
 main :: IO ()
 main = do
-    input <- map digitToInt . filter isDigit <$> readFile "input.txt"
+    input <- map digitToInt . filter isDigit <$> readInput 1
     print $ firstProblem input
     print $ secondProblem input
 

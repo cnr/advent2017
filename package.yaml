@@ -1,0 +1,81 @@
+name: advent2017
+version: 0.1.0.0
+synopsis: Advent of Code 2017 solutions in Haskell
+github: cnr/advent2017
+
+ghc-options: -Wall
+
+dependencies:
+  - base
+  - containers
+  - megaparsec
+  - mtl
+  - split
+
+library:
+  source-dirs: lib
+  exposed-modules:
+    - Common
+    - Knot
+
+executables:
+
+  day01:
+    main: src/Day01.hs
+    dependencies: [advent2017]
+
+  day02:
+    main: src/Day02.hs
+    dependencies: [advent2017]
+
+  day03:
+    main: src/Day03.hs
+    dependencies: [advent2017]
+
+  day04:
+    main: src/Day04.hs
+    dependencies: [advent2017]
+
+  day05:
+    main: src/Day05.hs
+    dependencies: [advent2017, vector]
+
+  day06:
+    main: src/Day06.hs
+    dependencies: [advent2017, vector]
+
+  day07:
+    main: src/Day07.hs
+    dependencies: [advent2017]
+
+  day08:
+    main: src/Day08.hs
+    dependencies: [advent2017]
+
+  day09:
+    main: src/Day09.hs
+    dependencies: [advent2017]
+
+  day10:
+    main: src/Day10.hs
+    dependencies: [advent2017]
+
+  day11:
+    main: src/Day11.hs
+    dependencies: [advent2017]
+
+  day12:
+    main: src/Day12.hs
+    dependencies: [advent2017, fgl]
+
+  day13:
+    main: src/Day13.hs
+    dependencies: [advent2017]
+
+  day14:
+    main: src/Day14.hs
+    dependencies: [advent2017]
+
+  day15:
+    main: src/Day15.hs
+    dependencies: [advent2017]

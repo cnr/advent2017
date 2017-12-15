@@ -1,6 +1,9 @@
 #!/usr/bin/env stack
 -- stack runghc
 
+module Main (main) where
+
+import           Common
 import           Data.Foldable
 import qualified Data.Map.Strict as M
 import           Data.Maybe
@@ -16,7 +19,7 @@ data Insn = Insn { target    :: String
 
 main :: IO ()
 main = do
-    insns <- map (unsafeParse insnP) . lines <$> readFile "input.txt"
+    insns <- readParsedLines insnP 8
 
     let results = scanl step M.empty insns
 
@@ -24,9 +27,9 @@ main = do
     print $ maximum (toList =<< results)
 
 step :: Registers -> Insn -> Registers
-step registers (Insn target delta condition)
-  | condition registers = M.insertWith (+) target delta registers
-  | otherwise           = registers
+step registers insn
+  | (condition insn) registers = M.insertWith (+) (target insn) (delta insn) registers
+  | otherwise                  = registers
 
 
 ---- Parsing input
@@ -40,10 +43,10 @@ deltaP = string "inc " *> intP
 
 conditionP :: Parser (Registers -> Bool)
 conditionP = do
-    reg  <- some letterChar
-    spaceChar
-    func <- compP
-    spaceChar
+    reg   <- some letterChar
+    _     <- spaceChar
+    func  <- compP
+    _     <- spaceChar
     value <- intP
     return (\registers -> fromMaybe 0 (M.lookup reg registers) `func` value)
 
@@ -58,6 +61,3 @@ compP = (/=) <$ string "!="
 intP :: Parser Int
 intP = negate <$ char '-' <*> (read <$> some digitChar)
    <|>                         read <$> some digitChar
-
-unsafeParse :: Parser a -> String -> a
-unsafeParse parser input = result where Right result = parse parser "input" input

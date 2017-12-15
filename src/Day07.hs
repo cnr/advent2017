@@ -1,6 +1,9 @@
 #!/usr/bin/env stack
 -- stack runghc
 
+module Main (main) where
+
+import Common
 import Control.Applicative
 import Data.Function
 import Data.List
@@ -8,12 +11,11 @@ import Data.Maybe
 import Data.Ord
 import qualified Data.Map as M
 import Text.Megaparsec
-import Text.Megaparsec.Char
 import Text.Megaparsec.String
 
 main :: IO ()
 main = do
-    input <- map (unsafeParse discP) . lines <$> readFile "input.txt"
+    input <- readParsedLines discP 7
 
     let bottom = part1 input
 
@@ -21,7 +23,7 @@ main = do
     print (part2 input bottom)
 
 part1 :: [Disc] -> Disc
-part1 discs = head [disc | disc <- discs, name disc `notElem` (holding =<< discs)]
+part1 discs = head [disc | disc <- discs, dName disc `notElem` (dHolding =<< discs)]
 
 part2 :: [Disc] -> Disc -> Int
 part2 discs = surface 0
@@ -33,27 +35,27 @@ part2 discs = surface 0
     surface expected disc =
         case imbalanced of
             Just (x,weight) -> surface weight x
-            Nothing         -> expected - heldWeight disc + weight disc
+            Nothing         -> expected - heldWeight disc + dWeight disc
 
         where
-        held = map discByName (holding disc)
+        held = map discByName (dHolding disc)
 
         -- disgusting -- need to clean this up
         imbalanced :: Maybe (Disc, Int) -- (imbalanced disc, expected weight)
         imbalanced = case sortBy (comparing length) . groupBy ((==) `on` heldWeight) . sortBy (comparing heldWeight) $ held of
-                         [_] -> Nothing
                          (x:y:_) -> Just (head x, heldWeight (head y))
+                         _       -> Nothing -- one weight
 
 
-    discsByName = M.fromList (map (\disc -> (name disc, disc)) discs)
+    discsByName = M.fromList (map (\disc -> (dName disc, disc)) discs)
     discByName = (discsByName M.!)
 
     heldWeight :: Disc -> Int
     heldWeight (Disc _ weight held) = weight + sum (map (heldWeight . discByName) held)
 
-data Disc = Disc { name    :: String
-                 , weight  :: Int
-                 , holding :: [String]
+data Disc = Disc { dName    :: String
+                 , dWeight  :: Int
+                 , dHolding :: [String]
                  } deriving Show
 
 discP :: Parser Disc
@@ -65,6 +67,3 @@ discP = Disc <$> some letterChar
              <*> (fromMaybe [] <$> optional holding)
     where
     holding = string " -> " *> some letterChar `sepBy1` string ", "
-
-unsafeParse :: Parser a -> String -> a
-unsafeParse parser xs = result where Right result = parse parser "source" xs

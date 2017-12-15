@@ -1,10 +1,13 @@
 
+module Main (main) where
+
+import Common
 import Text.Megaparsec
 import Text.Megaparsec.String
 
 main :: IO ()
 main = do
-    layers <- map (unsafeParse layerP) . lines <$> readFile "input.txt"
+    layers <- readParsedLines layerP 13
     print (part1 layers)
     print (part2 layers)
 
@@ -32,6 +35,3 @@ layerP = (,) <$> uintP <* string ": " <*> uintP
 
 uintP :: Parser Int
 uintP = read <$> some digitChar
-
-unsafeParse :: Parser a -> String -> a
-unsafeParse parser input = result where Right result = parse parser "input" input
