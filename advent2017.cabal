@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e32f22f353c8596abac8a52cda00c18a297afa1efb1848b0b02f0fc9f7c2e13f
+-- hash: 7e382d0ebb486add1f32ed32c204135766667d216801a208d39ae9159ff9d10c
 
 name:           advent2017
 version:        0.1.0.0
@@ -19,7 +19,7 @@ source-repository head
 library
   hs-source-dirs:
       lib
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       base
     , containers
@@ -35,7 +35,7 @@ library
 
 executable day01
   main-is: src/Day01.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -49,7 +49,7 @@ executable day01
 
 executable day02
   main-is: src/Day02.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -63,7 +63,7 @@ executable day02
 
 executable day03
   main-is: src/Day03.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -77,7 +77,7 @@ executable day03
 
 executable day04
   main-is: src/Day04.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -91,7 +91,7 @@ executable day04
 
 executable day05
   main-is: src/Day05.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -106,7 +106,7 @@ executable day05
 
 executable day06
   main-is: src/Day06.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -121,7 +121,7 @@ executable day06
 
 executable day07
   main-is: src/Day07.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -135,7 +135,7 @@ executable day07
 
 executable day08
   main-is: src/Day08.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -149,7 +149,7 @@ executable day08
 
 executable day09
   main-is: src/Day09.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -163,7 +163,7 @@ executable day09
 
 executable day10
   main-is: src/Day10.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -177,7 +177,7 @@ executable day10
 
 executable day11
   main-is: src/Day11.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -191,7 +191,7 @@ executable day11
 
 executable day12
   main-is: src/Day12.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -206,7 +206,7 @@ executable day12
 
 executable day13
   main-is: src/Day13.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -220,7 +220,7 @@ executable day13
 
 executable day14
   main-is: src/Day14.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -234,7 +234,7 @@ executable day14
 
 executable day15
   main-is: src/Day15.hs
-  ghc-options: -Wall
+  ghc-options: -Wall -O2
   build-depends:
       advent2017
     , base
@@ -242,6 +242,50 @@ executable day15
     , megaparsec
     , mtl
     , split
+  other-modules:
+      Paths_advent2017
+  default-language: Haskell2010
+
+executable day16
+  main-is: src/Day16.hs
+  ghc-options: -Wall -O2
+  build-depends:
+      advent2017
+    , base
+    , bimap
+    , containers
+    , megaparsec
+    , mtl
+    , split
+  other-modules:
+      Paths_advent2017
+  default-language: Haskell2010
+
+executable day17
+  main-is: src/Day17.hs
+  ghc-options: -Wall -O2
+  build-depends:
+      advent2017
+    , base
+    , containers
+    , megaparsec
+    , mtl
+    , split
+  other-modules:
+      Paths_advent2017
+  default-language: Haskell2010
+
+executable day18
+  main-is: src/Day18.hs
+  ghc-options: -Wall -O2
+  build-depends:
+      advent2017
+    , base
+    , containers
+    , megaparsec
+    , mtl
+    , split
+    , vector
   other-modules:
       Paths_advent2017
   default-language: Haskell2010

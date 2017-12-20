@@ -3,7 +3,7 @@ version: 0.1.0.0
 synopsis: Advent of Code 2017 solutions in Haskell
 github: cnr/advent2017
 
-ghc-options: -Wall
+ghc-options: -Wall -O2
 
 dependencies:
   - base
@@ -79,3 +79,15 @@ executables:
   day15:
     main: src/Day15.hs
     dependencies: [advent2017]
+
+  day16:
+    main: src/Day16.hs
+    dependencies: [advent2017, bimap]
+
+  day17:
+    main: src/Day17.hs
+    dependencies: [advent2017]
+
+  day18:
+    main: src/Day18.hs
+    dependencies: [advent2017, vector]
