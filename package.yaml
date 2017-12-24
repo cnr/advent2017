@@ -99,3 +99,7 @@ executables:
   day20:
     main: src/Day20.hs
     dependencies: [advent2017]
+
+  day21:
+    main: src/Day21.hs
+    dependencies: [advent2017]
