@@ -103,3 +103,7 @@ executables:
   day21:
     main: src/Day21.hs
     dependencies: [advent2017]
+
+  day22:
+    main: src/Day22.hs
+    dependencies: [advent2017]
