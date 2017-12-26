@@ -6,7 +6,8 @@ module Main (main) where
 import           Common
 import qualified Data.Map.Strict as M
 import           Text.Megaparsec
-import           Text.Megaparsec.String
+import           Text.Megaparsec.Char
+import           Text.Megaparsec.Char.Lexer
 import           Data.Graph.Inductive.Graph (mkUGraph)
 import           Data.Graph.Inductive.PatriciaTree (UGr)
 import           Data.Graph.Inductive.Query.DFS (components)
@@ -24,7 +25,4 @@ part2 :: M.Map Int [Int] -> Int
 part2 pipes = length . components $ (mkUGraph (M.keys pipes) (sequence =<< M.toList pipes) :: UGr)
 
 pipesP :: Parser (Int, [Int])
-pipesP = (,) <$> uintP <* string " <-> " <*> (uintP `sepBy` string ", ")
-
-uintP :: Parser Int
-uintP = read <$> some digitChar
+pipesP = (,) <$> decimal <* string " <-> " <*> (decimal `sepBy` string ", ")

@@ -107,3 +107,11 @@ executables:
   day22:
     main: src/Day22.hs
     dependencies: [advent2017]
+
+  day23:
+    main: src/Day23.hs
+    dependencies: [advent2017]
+
+  day24:
+    main: src/Day24.hs
+    dependencies: [advent2017, deepseq]

@@ -6,7 +6,7 @@ import Data.Function
 import Data.List
 import Data.Ord
 import Text.Megaparsec
-import Text.Megaparsec.String
+import Text.Megaparsec.Char
 
 main :: IO ()
 main = do
@@ -53,7 +53,3 @@ vectorP :: Parser Vector
 vectorP = between (char '<') (char '>') $ do
     [x,y,z] <- intP `sepBy1` char ','
     return (x,y,z)
-
-intP :: Parser Int
-intP = negate <$ char '-' <*> (read <$> some digitChar)
-   <|>                         read <$> some digitChar

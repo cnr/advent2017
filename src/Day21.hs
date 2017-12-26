@@ -7,7 +7,7 @@ import Data.List       (transpose)
 import Data.List.Split (chunksOf)
 import qualified Data.Map as M
 import Text.Megaparsec
-import Text.Megaparsec.String
+import Text.Megaparsec.Char
 
 main :: IO ()
 main = do

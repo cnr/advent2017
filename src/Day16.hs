@@ -10,7 +10,7 @@ import qualified Data.Bimap as B
 import           Data.List
 import           Data.Ord
 import           Text.Megaparsec
-import           Text.Megaparsec.String
+import           Text.Megaparsec.Char
 
 main :: IO ()
 main = do

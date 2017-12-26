@@ -1,6 +1,8 @@
 
 module Common
-    ( readInput
+    ( Parser
+    , intP
+    , readInput
     , readParsed
     , readParsedLines
     
@@ -8,11 +10,18 @@ module Common
     ) where
 
 import qualified Data.Set as S
-import           Text.Megaparsec (parse)
-import           Text.Megaparsec.String (Parser)
+import           Data.Void (Void)
+import           Text.Megaparsec ((<|>), Parsec, parse)
+import           Text.Megaparsec.Char (char)
+import           Text.Megaparsec.Char.Lexer (decimal)
 
 -- Parsing
 
+type Parser = Parsec Void String
+
+intP :: Parser Int
+intP = negate <$ char '-' <*> decimal
+   <|>                        decimal
 readInput :: Int -> IO String
 readInput n = readFile $ "input/day" ++ show n ++ ".txt"
 

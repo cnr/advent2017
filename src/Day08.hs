@@ -8,7 +8,7 @@ import           Data.Foldable
 import qualified Data.Map.Strict as M
 import           Data.Maybe
 import           Text.Megaparsec
-import           Text.Megaparsec.String
+import           Text.Megaparsec.Char
 
 type Registers = M.Map String Int
 
@@ -57,7 +57,3 @@ compP = (/=) <$ string "!="
     <|> (<=) <$ string "<="
     <|> (>)  <$ char '>'
     <|> (<)  <$ char '<'
-
-intP :: Parser Int
-intP = negate <$ char '-' <*> (read <$> some digitChar)
-   <|>                         read <$> some digitChar

@@ -2,8 +2,8 @@
 module Main (main) where
 
 import Common
-import Text.Megaparsec
-import Text.Megaparsec.String
+import Text.Megaparsec.Char
+import Text.Megaparsec.Char.Lexer
 
 main :: IO ()
 main = do
@@ -31,7 +31,4 @@ blocked offset (ix,range) = (ix + offset) `mod` ((range - 1) * 2) == 0
 ---- Parsing input
 
 layerP :: Parser Layer
-layerP = (,) <$> uintP <* string ": " <*> uintP
-
-uintP :: Parser Int
-uintP = read <$> some digitChar
+layerP = (,) <$> decimal <* string ": " <*> decimal

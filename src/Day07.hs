@@ -11,7 +11,8 @@ import Data.Maybe
 import Data.Ord
 import qualified Data.Map as M
 import Text.Megaparsec
-import Text.Megaparsec.String
+import Text.Megaparsec.Char
+import Text.Megaparsec.Char.Lexer
 
 main :: IO ()
 main = do
@@ -62,7 +63,7 @@ discP :: Parser Disc
 discP = Disc <$> some letterChar
              <*  spaceChar
              <*  char '('
-             <*> (read <$> some digitChar)
+             <*> decimal
              <*  char ')'
              <*> (fromMaybe [] <$> optional holding)
     where

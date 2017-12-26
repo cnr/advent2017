@@ -5,7 +5,7 @@ module Main (main) where
 
 import Common
 import Text.Megaparsec
-import Text.Megaparsec.String
+import Text.Megaparsec.Char
 
 main :: IO ()
 main = print =<< readParsed (groupP 1) 9

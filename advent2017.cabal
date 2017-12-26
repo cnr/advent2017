@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 882bc164e0d59c2b923e6444834a9b35df8310bc51b32029fd7594c756c2e7dc
+-- hash: e575545784a7086beb81224c955d07489b81a10e2901dd153f85c1919d878ba0
 
 name:           advent2017
 version:        0.1.0.0
@@ -340,6 +340,35 @@ executable day22
       advent2017
     , base
     , containers
+    , megaparsec
+    , mtl
+    , split
+  other-modules:
+      Paths_advent2017
+  default-language: Haskell2010
+
+executable day23
+  main-is: src/Day23.hs
+  ghc-options: -Wall -O2
+  build-depends:
+      advent2017
+    , base
+    , containers
+    , megaparsec
+    , mtl
+    , split
+  other-modules:
+      Paths_advent2017
+  default-language: Haskell2010
+
+executable day24
+  main-is: src/Day24.hs
+  ghc-options: -Wall -O2
+  build-depends:
+      advent2017
+    , base
+    , containers
+    , deepseq
     , megaparsec
     , mtl
     , split

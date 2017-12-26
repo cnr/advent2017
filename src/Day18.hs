@@ -6,7 +6,7 @@ import Data.Maybe (fromMaybe)
 import qualified Data.Map.Strict as M
 import qualified Data.Vector as V
 import Text.Megaparsec
-import Text.Megaparsec.String
+import Text.Megaparsec.Char
 
 main :: IO ()
 main = do
@@ -127,8 +127,3 @@ regP = letterChar
 valP :: Parser Val
 valP = RegVal <$> regP
    <|> IntVal <$> intP
-
-intP :: Parser Int
-intP = negate <$ char '-' <*> (read <$> some digitChar)
-   <|>                        (read <$> some digitChar)
-
