@@ -1,57 +1,57 @@
 
 module Main (main) where
 
+import Control.Monad.State.Strict (State, execState, state)
+
 -- hardcoded my input today
 
 main :: IO ()
 main = print (checksum (stepN 12919244 stateA))
 
--- I feel like there's a better way to tie this together
-stepN :: Int -> Fix TState -> TZipper
-stepN = go (TZipper [] False [])
-    where
-    go :: TZipper -> Int -> Fix TState -> TZipper
-    go zipper 0 _     = zipper
-    go zipper n state = let (state', zipper') = runTState (unFix state) zipper
-                           in go zipper' (n-1) state'
+stepN :: Int -> TState -> TZipper
+stepN n tstate = execState (foldFixN n tstate) (TZipper [] False [])
 
-stateA :: Fix TState
-stateA = Fix . TState $ \zipper ->
+foldFixN :: Monad m => Int -> Fix m -> m (Fix m)
+foldFixN 0 fixed = return fixed
+foldFixN n fixed = unFix fixed >>= foldFixN (n-1)
+
+stateA :: TState
+stateA = Fix . state $ \zipper ->
     if not (focus zipper)
        then (stateB, shiftR (setFocus True  zipper))
        else (stateC, shiftL (setFocus False zipper))
 
-stateB :: Fix TState
-stateB = Fix . TState $ \zipper ->
+stateB :: TState
+stateB = Fix . state $ \zipper ->
     if not (focus zipper)
        then (stateA, shiftL (setFocus True zipper))
        else (stateD, shiftR (setFocus True zipper))
 
-stateC :: Fix TState
-stateC = Fix . TState $ \zipper ->
+stateC :: TState
+stateC = Fix . state $ \zipper ->
     if not (focus zipper)
        then (stateA, shiftR (setFocus True  zipper))
        else (stateE, shiftL (setFocus False zipper))
 
-stateD :: Fix TState
-stateD = Fix . TState $ \zipper ->
+stateD :: TState
+stateD = Fix . state $ \zipper ->
     if not (focus zipper)
        then (stateA, shiftR (setFocus True  zipper))
        else (stateB, shiftR (setFocus False zipper))
 
-stateE :: Fix TState
-stateE = Fix . TState $ \zipper ->
+stateE :: TState
+stateE = Fix . state $ \zipper ->
     if not (focus zipper)
        then (stateF, shiftL (setFocus True zipper))
        else (stateC, shiftL (setFocus True zipper))
 
-stateF :: Fix TState
-stateF = Fix . TState $ \zipper ->
+stateF :: TState
+stateF = Fix . state $ \zipper ->
     if not (focus zipper)
        then (stateD, shiftR (setFocus True zipper))
        else (stateA, shiftR (setFocus True zipper))
 
-newtype TState a = TState { runTState :: TZipper -> (a, TZipper) }
+type TState = Fix (State TZipper)
 
 data Fix f = Fix { unFix :: f (Fix f) }
 
