@@ -114,4 +114,8 @@ executables:
 
   day24:
     main: src/Day24.hs
-    dependencies: [advent2017, deepseq]
+    dependencies: [advent2017]
+
+  day25:
+    main: src/Day25.hs
+    dependencies: [advent2017]
